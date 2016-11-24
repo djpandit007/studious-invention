@@ -6,8 +6,9 @@ public class AppGUI {
    private JFrame mainFrame;
    private JLabel headerLabel;
    private JLabel statusLabel;
-   private JPanel controlPanel;
-   private JLabel msglabel;
+//   private JPanel controlPanel;
+   private JButton submitButton;
+   private JButton exitButton;
 
    public AppGUI(){
       prepareGUI();
@@ -15,56 +16,38 @@ public class AppGUI {
 
    public static void main(String[] args){
       AppGUI  appGui = new AppGUI();  
-      appGui.showJFrameDemo();
+      appGui.prepareGUI();
    }
 
    private void prepareGUI(){
       mainFrame = new JFrame("Vocabulary Builder");
       mainFrame.setSize(1280, 1024);
-      mainFrame.setLayout(new GridLayout(3, 1));
+      mainFrame.setLayout(new GridLayout(5, 1));
       mainFrame.setLocationRelativeTo(null);
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
       });    
-      headerLabel = new JLabel("", JLabel.CENTER);        
-      statusLabel = new JLabel("",JLabel.CENTER);    
+      headerLabel = new JLabel("", JLabel.CENTER);
+      headerLabel.setText("Welcome to Vocabulary Builder");   
+      headerLabel.setFont(new Font(headerLabel.getFont().getName(), headerLabel.getFont().getStyle(), 48));
+      
+      statusLabel = new JLabel("",JLabel.CENTER);
+      
+      submitButton = new JButton("Submit");
+      exitButton = new JButton("Exit");
 
       statusLabel.setSize(350,100);
 
-      msglabel = new JLabel("Welcome to TutorialsPoint SWING Tutorial.", JLabel.CENTER);
-
-      controlPanel = new JPanel();
-      controlPanel.setLayout(new FlowLayout());
+//      controlPanel = new JPanel();
+//      controlPanel.setLayout(new FlowLayout());
 
       mainFrame.add(headerLabel);
-      mainFrame.add(controlPanel);
+//      mainFrame.add(controlPanel);
       mainFrame.add(statusLabel);
-      mainFrame.setVisible(true);  
-   }
-
-   private void showJFrameDemo(){
-      headerLabel.setText("Container in action: JFrame");   
-
-      final JFrame frame = new JFrame();
-      frame.setSize(300, 300);
-      frame.setLayout(new FlowLayout());  
-      frame.setLocationRelativeTo(null);
-      frame.add(msglabel);
-      frame.addWindowListener(new WindowAdapter() {
-         public void windowClosing(WindowEvent windowEvent){
-            frame.dispose();
-         }        
-      });    
-      JButton okButton = new JButton("Open a Frame");
-      okButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            statusLabel.setText("A Frame shown to the user.");
-            frame.setVisible(true);
-         }
-      });
-      controlPanel.add(okButton);
+      mainFrame.add(submitButton);
+      mainFrame.add(exitButton);
       mainFrame.setVisible(true);  
    }
 }
