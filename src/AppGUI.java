@@ -5,10 +5,15 @@ import javax.swing.*;
 public class AppGUI {
    private JFrame mainFrame;
    private JLabel headerLabel;
-   private JLabel statusLabel;
-//   private JPanel controlPanel;
-   private JButton submitButton;
-   private JButton exitButton;
+//   private JLabel statusLabel;
+//   private JLabel remainingLetters;
+//   private JLabel guessedLetters;
+   private JTextArea wordInfo;
+//   private JButton submitButton;
+//   private JButton exitButton;
+//   
+//   private String alphabet = "abcdefghijklmnopqrstuvwxyz";
+//   private String usedLetters = "";
 
    public AppGUI(){
       prepareGUI();
@@ -20,9 +25,13 @@ public class AppGUI {
    }
 
    private void prepareGUI(){
+	  
+	  GridBagLayout gbLayout = new GridBagLayout();
+	  GridBagConstraints gbConstraints = new GridBagConstraints();
+	   
       mainFrame = new JFrame("Vocabulary Builder");
       mainFrame.setSize(1280, 1024);
-      mainFrame.setLayout(new GridLayout(5, 1));
+      mainFrame.setLayout(gbLayout);
       mainFrame.setLocationRelativeTo(null);
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -32,22 +41,45 @@ public class AppGUI {
       headerLabel = new JLabel("", JLabel.CENTER);
       headerLabel.setText("Welcome to Vocabulary Builder");   
       headerLabel.setFont(new Font(headerLabel.getFont().getName(), headerLabel.getFont().getStyle(), 48));
-      
-      statusLabel = new JLabel("",JLabel.CENTER);
-      
-      submitButton = new JButton("Submit");
-      exitButton = new JButton("Exit");
-
-      statusLabel.setSize(350,100);
-
-//      controlPanel = new JPanel();
-//      controlPanel.setLayout(new FlowLayout());
-
+//      gbConstraints.gridx = 0;
+      gbConstraints.gridy = 0;
+      gbLayout.setConstraints(headerLabel, gbConstraints);
       mainFrame.add(headerLabel);
-//      mainFrame.add(controlPanel);
-      mainFrame.add(statusLabel);
-      mainFrame.add(submitButton);
-      mainFrame.add(exitButton);
+      
+      
+      
+      wordInfo = new JTextArea("The word meaning, score, origin and usage will be displayed here");
+      wordInfo.setEditable(false);
+      wordInfo.setFont(new Font(wordInfo.getFont().getName(), wordInfo.getFont().getStyle(), 32));
+      wordInfo.setPreferredSize(new Dimension(1000, 300));
+//      gbConstraints.gridx = 0;
+      gbConstraints.gridy = 1;
+      gbLayout.setConstraints(wordInfo, gbConstraints);
+      mainFrame.add(wordInfo);
+      
+//      statusLabel = new JLabel("Your current score is: <score>",JLabel.CENTER);
+//      
+//      remainingLetters = new JLabel("", JLabel.CENTER);
+//      remainingLetters.setText("Letters remaining: " + alphabet);
+//      
+//      guessedLetters = new JLabel("", JLabel.CENTER);
+//      guessedLetters.setText("Letters already guessed: " + usedLetters);
+//      
+//      submitButton = new JButton("Submit");
+//      submitButton.setMaximumSize(new Dimension(5, 5));
+//      submitButton.setPreferredSize(new Dimension(10, 10));
+//      
+//      exitButton = new JButton("Exit");
+//      exitButton.setPreferredSize(new Dimension(30, 30));
+//
+//      statusLabel.setSize(350,100);
+//
+//      mainFrame.add(statusLabel);
+//
+//      mainFrame.add(submitButton);
+//      mainFrame.add(remainingLetters);
+//      mainFrame.add(guessedLetters);
+//      mainFrame.add(exitButton);
       mainFrame.setVisible(true);  
    }
 }
