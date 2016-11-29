@@ -7,7 +7,7 @@ public class Test {
 	private ArrayList<ArrayList<String>> wordsDB;
 	private ArrayList<String> oneWord;
 	
-	
+	private AppGUI gui;
 
 	public Test() throws FileNotFoundException, IOException
 	{
@@ -15,7 +15,8 @@ public class Test {
 		wordsDB = words.getList();
 		oneWord = words.getOne();
 		
-		
+		gui = new AppGUI();
+		gui.prepareGUI();
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException, IOException
