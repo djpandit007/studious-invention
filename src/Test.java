@@ -6,12 +6,16 @@ public class Test {
 	private Words words;
 	private ArrayList<ArrayList<String>> wordsDB;
 	private ArrayList<String> oneWord;
+	
+	
 
 	public Test() throws FileNotFoundException, IOException
 	{
 		words = new Words();
 		wordsDB = words.getList();
 		oneWord = words.getOne();
+		
+		
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException, IOException
