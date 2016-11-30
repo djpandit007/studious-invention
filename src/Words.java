@@ -32,6 +32,7 @@ public class Words {
 		return wordsList;
 	}
 	
+	// Returns data about one word at random
 	public ArrayList<String> getOne()
 	{
 		Random rand = new Random();

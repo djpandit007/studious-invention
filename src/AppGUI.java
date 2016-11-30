@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class AppGUI {
    private JFrame mainFrame;
@@ -9,9 +13,9 @@ public class AppGUI {
    private JLabel remainingLetters;	// Shows remaining letters of alphabet
    private JLabel guessedLetters;	// Shows letters guessed so far
    private JLabel currentWord;	// Placeholder for blanks of current word
-//   private JLabel currentGuess;	// Next character to be guessed
+   private JLabel currentGuess;	// Next character to be guessed
    private JTextArea wordInfo;	// Contains info about the word
-//   private JButton submitButton;	// Submits the current guessed character
+   private JButton submitButton;	// Submits the current guessed character
    private JButton exitButton;	// Exits the game
    private JTextField nextCharacter;	// Contains the next guessed character
 
@@ -19,12 +23,17 @@ public class AppGUI {
    private String usedLetters = "";
    
    private Font statusFont;
+   private String wordToGuess, meaning, usage, points, difficulty, origin;
 
-//   public AppGUI(){
-//      prepareGUI();
-//   }
-
-   public void prepareGUI(){
+   public void prepareGUI(ArrayList<String> word){
+	   
+	   wordToGuess = word.get(0);
+	   meaning = word.get(1);
+	   usage = word.get(2);
+	   points = word.get(3);
+	   difficulty = word.get(4);
+	   origin = word.get(5);
+	   
 	  
 	  GridBagLayout gbLayout = new GridBagLayout();
 	  GridBagConstraints gbConstraints = new GridBagConstraints();
@@ -53,10 +62,16 @@ public class AppGUI {
       gbLayout.setConstraints(statusLabel, gbConstraints);
       mainFrame.add(statusLabel);
       
-      wordInfo = new JTextArea("The word meaning, score, origin and usage will be displayed here");
+      wordInfo = new JTextArea();
+      wordInfo.setText("Length of word: " + wordToGuess.length() + 
+    		  "\nMeaning: " + meaning + 
+    		  "\nPoints: " + points + 
+    		  "\nUsage: " + usage + 
+    		  "\nOrigin: " + origin);
       wordInfo.setEditable(false);
+      wordInfo.setLineWrap(true);
       wordInfo.setFont(new Font(wordInfo.getFont().getName(), wordInfo.getFont().getStyle(), 32));
-      wordInfo.setPreferredSize(new Dimension(1000, 300));
+      wordInfo.setPreferredSize(new Dimension(1000, 220));
       gbConstraints.gridy = 2;
       gbLayout.setConstraints(wordInfo, gbConstraints);
       mainFrame.add(wordInfo);
@@ -67,26 +82,37 @@ public class AppGUI {
       gbLayout.setConstraints(currentWord, gbConstraints);
       mainFrame.add(currentWord);
       
-//      currentGuess = new JLabel("Your guess: ");
-//      currentGuess.setFont(statusFont);
-//      gbConstraints.gridy = 4;
-//      gbConstraints.anchor = GridBagConstraints.WEST;
-//      gbLayout.setConstraints(currentGuess, gbConstraints);
-//      mainFrame.add(currentGuess);
+      currentGuess = new JLabel("Your guess: ");
+      currentGuess.setFont(statusFont);
+      gbConstraints.gridy = 4;
+      gbConstraints.anchor = GridBagConstraints.WEST;
+      gbLayout.setConstraints(currentGuess, gbConstraints);
+      mainFrame.add(currentGuess);
       
-      nextCharacter = new JTextField("Guess", 4);
+      nextCharacter = new JTextField("", 2);
       nextCharacter.setFont(statusFont);
       nextCharacter.setPreferredSize(new Dimension(100, 50));
       gbConstraints.gridy = 4;
+      gbConstraints.anchor = GridBagConstraints.CENTER;
       gbLayout.setConstraints(nextCharacter, gbConstraints);
       mainFrame.add(nextCharacter);
       
-//      submitButton = new JButton("Submit");
-//      submitButton.setFont(statusFont);
-////      gbConstraints.gridx = 2;
-//      gbConstraints.gridy = 4;
-//      gbLayout.setConstraints(submitButton, gbConstraints);
-//      mainFrame.add(submitButton);
+      submitButton = new JButton("Submit");
+      submitButton.setFont(statusFont);
+//      gbConstraints.gridx = 2;
+      gbConstraints.gridy = 4;
+      gbConstraints.anchor = GridBagConstraints.EAST;
+      gbLayout.setConstraints(submitButton, gbConstraints);
+      mainFrame.add(submitButton);
+      submitButton.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println(nextCharacter.getText());
+			nextCharacter.setText("");
+		}
+	});
       
       remainingLetters = new JLabel("", JLabel.CENTER);
       remainingLetters.setText("Letters remaining: " + alphabet);
@@ -110,18 +136,12 @@ public class AppGUI {
 		public void actionPerformed(ActionEvent e) {
 			mainFrame.setVisible(false);
 			mainFrame.dispose();
+			System.exit(0);
 		}
 	});
       gbConstraints.gridy = 7;
       gbLayout.setConstraints(exitButton, gbConstraints);
       mainFrame.add(exitButton);
-      
-//      nextButton.addActionListener(new ActionListener() {
-//          public void actionPerformed(ActionEvent ae){
-//              j++;
-//              doNext(j, nextButton);
-//          }
-//         });
       
       mainFrame.setVisible(true);  
    }

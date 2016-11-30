@@ -16,7 +16,7 @@ public class Test {
 		oneWord = words.getOne();
 		
 		gui = new AppGUI();
-		gui.prepareGUI();
+		gui.prepareGUI(oneWord);
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException, IOException
