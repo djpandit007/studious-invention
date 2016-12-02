@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -24,7 +26,6 @@ public class AppGUI {
    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
    private String usedLetters = "";
    private String wordToGuess, meaning, usage, origin;
-//   private String difficulty;
    private int guessesLeft = 8;
    private String nextChar;
    private int points, currentScore;
@@ -38,7 +39,6 @@ public class AppGUI {
 	   meaning = word.get(1);
 	   usage = word.get(2);
 	   points = Integer.parseInt(word.get(3));
-//	   difficulty = word.get(4);
 	   origin = word.get(5);
 	   currentScore = GameScore.score;
 	   
@@ -53,6 +53,7 @@ public class AppGUI {
       mainFrame.setLocationRelativeTo(null);
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
+        	 app.writeResultsToFile(GameScore.wordAttempt);
             System.exit(0);
          }        
       });    
@@ -174,21 +175,15 @@ public class AppGUI {
 			currentWord.setText("Word revealed so far: " + app.getGuessedWord(wordToGuess, usedLetters));
 			if (app.isWordGuessed(wordToGuess, usedLetters))
 			{
-				result.setText("Congratulations, you won!");
+				result.setText("Congratulations, you won! Click on New Word to continue.");
+				GameScore.wordAttempt.add(new ArrayList<String>(Arrays.asList(wordToGuess, "Correct")));
 				GameScore.score += points;
 				statusLabel.setText("Your current score is: " + currentScore);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				mainFrame.dispose();
-				app.StartNewGame();
 			}
 			else if (guessesLeft <= 0)
 			{
-				result.setText("Sorry, you ran out of guesses. The word was " + wordToGuess);
+				result.setText("Sorry, you ran out of guesses. The word was " + wordToGuess + ". Click New Word to continue.");
+				GameScore.wordAttempt.add(new ArrayList<String>(Arrays.asList(wordToGuess, "Wrong")));
 			}
 			nextCharacter.requestFocus();
 		}
@@ -248,6 +243,7 @@ public class AppGUI {
     		// TODO Auto-generated method stub
   			mainFrame.setVisible(false);
   			mainFrame.dispose();
+  			app.writeResultsToFile(GameScore.wordAttempt);
   			System.exit(0);
   		}
   	});

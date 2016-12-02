@@ -1,5 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +81,27 @@ public class RunApplication {
 		}
 		
 		return ans;
+	}
+	
+	public void writeResultsToFile(ArrayList<ArrayList<String>> wordCorrectMap)
+	{
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+		System.out.println(timeStamp);
+		
+		try
+		{
+			PrintWriter writer = new PrintWriter(timeStamp + ".txt", "UTF-8");
+			System.out.println("Size: " + wordCorrectMap.size());
+			for (int i = 0; i < wordCorrectMap.size(); i++)
+			{
+				writer.println(wordCorrectMap.get(i).get(0) + " " + wordCorrectMap.get(i).get(1));
+			}
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println("There was an IO Exception");
+		}
 	}
 	
 	public void StartNewGame()
